@@ -14,24 +14,26 @@ def Nation():
 @app.route("/NationData")
 def NationData():
     drzava = request.args.get('drzava')
+    ime = request.args.get('ime')
+    email = request.args.get('email')
+    geslo = request.args.get('geslo')
 
-    url = f"https://api.nationalize.io/?name={drzava}"
+    url = f"https://api.nationalize.io/?name={ime}"
     response = requests.get(url)
     podatki = response.json()
 
     prvadrzava = podatki.get('country', [])
     prvadrzavaid = prvadrzava[0].get('country_id')
 
-    ime = request.args.get('ime')
-    email = request.args.get('email')
-    geslo = request.args.get('geslo')
 
     print(ime, email, geslo)
 
-    db.insert({"ime" : ime, "email" : email, "geslo" : geslo, "drzava" : drzava})
 
     if drzava == prvadrzavaid:
+        db.insert({"ime" : ime, "email" : email, "geslo" : geslo, "drzava" : drzava})
         return {"status" : "Uspesno"}
+    else:
+        return {"status" : "Neuspesno"}
 
         
 
