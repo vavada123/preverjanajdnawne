@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Document</title>
+</head>
+<body>
+    <p>Email <input type="email" id="email"></p>
+    <p>Ime <input type="text" id="ime"></p>
+    <p>Geslo <input type="text" required id="geslo"></p>
+    <p>Država <input type="text" required id="drzava"></p>
+
+    <p><button onclick="btnClick()" type="button">Pošlji</button></p>
+
+    <div id="statusdrzava"">ALI JE DRZAVA VELJANAJAN</div>
+</body>
+</html>
+
+<script>
+
+    function btnClick() {
+        var drzava = document.getElementById("drzava").value;
+        var ime = document.getElementById("ime").value;
+        var geslo = document.getElementById("geslo").value;
+        var email = document.getElementById("email").value;
+
+        $.ajax({
+
+
+            url: "/NationData?drzava=" + drzava + "&ime=" + ime + "&geslo=" + geslo + "&email=" + email,
+            method: "GET",
+            success: function (result) {
+               console.log(result)
+
+               statusdrzava.innerHTML = result.status
+            }
+        });
+    }
+
+</script>
